@@ -1,0 +1,54 @@
+spring:
+  routes:
+    - id: openapi
+      uri: http://localhost:8088/api/v1
+      predicates:
+        - Path=/v3/api-docs/**
+      filters:
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sensor_vista
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: localhost
+    port: 1025
+    username: baha
+    password: baha
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+application:
+  security:
+    jwt:
+      secret-key: 0d98c834dccc27b115b003c0b30bd8843acded5c773c37375b8e6605171de4f60399
+      expiration: 8640000
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+  file:
+    upload:
+      photos-output-path: ./uploads
+
+server:
+  port: 8088
+
+
+
